@@ -80,7 +80,7 @@ def get_team_by_player_name(name):
 			return teams_config["teams"].index(team) + 1
 	return "default"
 
-@app.route("/generate-image-v2", methods = ["GET"])
+@app.route("/generate-image-v2/tablecloth.png", methods = ["GET"])
 def generate_image_v2():
 	east_team = get_team_by_player_name(request.args.get("east"))
 	south_team = get_team_by_player_name(request.args.get("south"))
