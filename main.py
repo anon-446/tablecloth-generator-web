@@ -73,19 +73,19 @@ def generate_image():
 
 		return send_from_directory(ROOT_DIR + "/static/temp_tablecloth", tablecloth_name, mimetype='image/png')
 
-def index_team_or_default(team_str):
-	try:
-		team_index = teams_config["teams"].index(team_str) + 1
-		return team_index
-	except ValueError:
-		return "default"
+def get_team_by_player_name(name):
+	player_teams = teams_configs["players"]
+	for team in player_teams:
+		if name in player_teams[team]:
+			return teams_config["teams"].index(team) + 1
+	return "default"
 
 @app.route("/generate-image-v2", methods = ["GET"])
 def generate_image_v2():
-	east_team = index_team_or_default(request.args.get("east"))
-	south_team = index_team_or_default(request.args.get("south"))
-	west_team = index_team_or_default(request.args.get("west"))
-	north_team = index_team_or_default(request.args.get("north"))
+	east_team = get_team_by_player_name(request.args.get("east"))
+	south_team = get_team_by_player_name(request.args.get("south"))
+	west_team = get_team_by_player_name(request.args.get("west"))
+	north_team = get_team_by_player_name(request.args.get("north"))
 	print(east_team)
 	print(south_team)
 	print(west_team)
@@ -94,13 +94,13 @@ def generate_image_v2():
 	tablecloth = Image.open(ROOT_DIR + "/static/mat.png")
 	border = Image.open(ROOT_DIR + "/static/table_border.png")
 	tech_lines = Image.open(ROOT_DIR + "/static/technical_lines.png")
-	east_image = Image.open(ROOT_DIR + "/static/tablecloth/team%d.png" % east_team)
+	east_image = Image.open(ROOT_DIR + "/static/tablecloth/team%s.png" % east_team)
 	east_image = east_image.convert("RGBA")
-	south_image = Image.open(ROOT_DIR + "/static/tablecloth/team%d.png" % south_team)
+	south_image = Image.open(ROOT_DIR + "/static/tablecloth/team%s.png" % south_team)
 	#south_image = south_image.rotate(90, expand=True).convert("RGBA")
-	west_image = Image.open(ROOT_DIR + "/static/tablecloth/team%d.png" % west_team)
+	west_image = Image.open(ROOT_DIR + "/static/tablecloth/team%s.png" % west_team)
 	west_image = west_image.rotate(180, expand=True).convert("RGBA")
-	north_image = Image.open(ROOT_DIR + "/static/tablecloth/team%d.png" % north_team)
+	north_image = Image.open(ROOT_DIR + "/static/tablecloth/team%s.png" % north_team)
 	#north_image = north_image.rotate(-90, expand=True).convert("RGBA")
 
 	final_tablecloth = Image.new("RGBA", (2048, 2048))
