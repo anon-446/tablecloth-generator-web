@@ -74,7 +74,7 @@ def generate_image():
 		return send_from_directory(ROOT_DIR + "/static/temp_tablecloth", tablecloth_name, mimetype='image/png')
 
 def get_team_by_player_name(name):
-	player_teams = teams_configs["players"]
+	player_teams = teams_config["players"]
 	for team in player_teams:
 		if name in player_teams[team]:
 			return teams_config["teams"].index(team) + 1
