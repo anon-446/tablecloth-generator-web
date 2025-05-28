@@ -76,7 +76,8 @@ def generate_image():
 def get_team_by_player_name(name):
 	player_teams = teams_config["players"]
 	for team in player_teams:
-		if name in player_teams[team]:
+		lowercase_names = [item.lower() for item in player_teams[team]]
+		if name.lower() in lowercase_names:
 			return teams_config["teams"].index(team) + 1
 	return "default"
 
