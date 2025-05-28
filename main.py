@@ -1,8 +1,10 @@
 import json, os, random
 from PIL import Image
 from flask import Flask, render_template, request, send_from_directory
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 fp_open = open("config/teams.json", "r",
                     encoding="utf-8")
 teams_config = json.loads(fp_open.read())
