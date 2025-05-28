@@ -94,7 +94,7 @@ def _corsify_actual_response(response):
 @app.route("/generate-image-v2/tablecloth.png", methods = ["GET"])
 def generate_image_v2():
 	if request.method == "OPTIONS": # CORS preflight
-        return _build_cors_preflight_response()
+		return _build_cors_preflight_response()
 	east_team = get_team_by_player_name(request.args.get("east"))
 	south_team = get_team_by_player_name(request.args.get("south"))
 	west_team = get_team_by_player_name(request.args.get("west"))
