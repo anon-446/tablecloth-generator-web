@@ -1,6 +1,6 @@
 import json, os, random
 from PIL import Image
-from flask import Flask, render_template, request, send_from_directory
+from flask import Flask, render_template, request, send_from_directory, make_response
 
 app = Flask(__name__)
 fp_open = open("config/teams.json", "r",
@@ -80,8 +80,21 @@ def get_team_by_player_name(name):
 			return teams_config["teams"].index(team) + 1
 	return "default"
 
+def _build_cors_preflight_response():
+    response = make_response()
+    response.headers.add("Access-Control-Allow-Origin", "*")
+    response.headers.add('Access-Control-Allow-Headers', "*")
+    response.headers.add('Access-Control-Allow-Methods', "*")
+    return response
+
+def _corsify_actual_response(response):
+    response.headers.add("Access-Control-Allow-Origin", "*")
+    return response
+
 @app.route("/generate-image-v2/tablecloth.png", methods = ["GET"])
 def generate_image_v2():
+	if request.method == "OPTIONS": # CORS preflight
+        return _build_cors_preflight_response()
 	east_team = get_team_by_player_name(request.args.get("east"))
 	south_team = get_team_by_player_name(request.args.get("south"))
 	west_team = get_team_by_player_name(request.args.get("west"))
@@ -126,7 +139,8 @@ def generate_image_v2():
 	tablecloth_name = "tablecloth_%d.jpg" % random.getrandbits(128)
 	final_tablecloth.convert("RGB").save(ROOT_DIR + "/static/temp_tablecloth/" + tablecloth_name)
 
-	return send_from_directory(ROOT_DIR + "/static/temp_tablecloth", tablecloth_name, mimetype='image/png')
+	response = send_from_directory(ROOT_DIR + "/static/temp_tablecloth", tablecloth_name, mimetype='image/png')
+	return _corsify_actual_response(response)
 
 @app.route("/")
 def main():
