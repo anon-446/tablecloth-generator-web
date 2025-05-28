@@ -73,6 +73,61 @@ def generate_image():
 
 		return send_from_directory(ROOT_DIR + "/static/temp_tablecloth", tablecloth_name, mimetype='image/png')
 
+def index_team_or_default(team_str):
+	try:
+		team_index = teams_config["teams"].index(team_str) + 1
+		return team_index
+	except ValueError:
+		return "default"
+
+@app.route("/generate-image-v2", methods = ["GET"])
+def generate_image_v2():
+	east_team = index_team_or_default(request.args.get("east"))
+	south_team = index_team_or_default(request.args.get("south"))
+	west_team = index_team_or_default(request.args.get("west"))
+	north_team = index_team_or_default(request.args.get("north"))
+	print(east_team)
+	print(south_team)
+	print(west_team)
+	print(north_team)
+
+	tablecloth = Image.open(ROOT_DIR + "/static/mat.png")
+	border = Image.open(ROOT_DIR + "/static/table_border.png")
+	tech_lines = Image.open(ROOT_DIR + "/static/technical_lines.png")
+	east_image = Image.open(ROOT_DIR + "/static/tablecloth/team%d.png" % east_team)
+	east_image = east_image.convert("RGBA")
+	south_image = Image.open(ROOT_DIR + "/static/tablecloth/team%d.png" % south_team)
+	#south_image = south_image.rotate(90, expand=True).convert("RGBA")
+	west_image = Image.open(ROOT_DIR + "/static/tablecloth/team%d.png" % west_team)
+	west_image = west_image.rotate(180, expand=True).convert("RGBA")
+	north_image = Image.open(ROOT_DIR + "/static/tablecloth/team%d.png" % north_team)
+	#north_image = north_image.rotate(-90, expand=True).convert("RGBA")
+
+	final_tablecloth = Image.new("RGBA", (2048, 2048))
+	final_tablecloth.paste(tablecloth, (0, 0), tablecloth)
+	final_tablecloth.paste(border, (0,0), border)
+	if east_image.size == (1568, 786):
+		final_tablecloth.paste(east_image, (240, 1020), east_image)
+	else:
+		final_tablecloth.paste(east_image.resize((1568, 786)), (240, 1020), east_image.resize((1568, 786)))
+	if south_image.size == (1568, 786):
+		final_tablecloth.paste(south_image.rotate(90, expand=True).convert("RGBA"), (1020, 240), south_image.rotate(90, expand=True).convert("RGBA"))
+	else:
+		final_tablecloth.paste(south_image.resize((1568, 786)).rotate(90, expand=True).convert("RGBA"), (1020, 240), south_image.resize((1568, 786)).rotate(90, expand=True).convert("RGBA"))
+	if west_image.size == (1568, 786):
+		final_tablecloth.paste(west_image, (235, 240), west_image)
+	else:
+		final_tablecloth.paste(west_image.resize((1568, 786)), (235, 240), west_image.resize((1568, 786)))
+	if north_image.size == (1568, 786):
+		final_tablecloth.paste(north_image.rotate(-90, expand=True).convert("RGBA"), (240, 240), north_image.rotate(-90, expand=True).convert("RGBA"))
+	else:
+		final_tablecloth.paste(north_image.resize((1568, 786)).rotate(-90, expand=True).convert("RGBA"), (240, 240), north_image.resize((1568, 786)).rotate(-90, expand=True).convert("RGBA"))
+
+	tablecloth_name = "tablecloth_%d.jpg" % random.getrandbits(128)
+	final_tablecloth.convert("RGB").save(ROOT_DIR + "/static/temp_tablecloth/" + tablecloth_name)
+
+	return send_from_directory(ROOT_DIR + "/static/temp_tablecloth", tablecloth_name, mimetype='image/png')
+
 @app.route("/")
 def main():
 	return render_template("index.html", team_names=teams_config["teams"], teams=teams_config["players"].items())
