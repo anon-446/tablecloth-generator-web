@@ -144,7 +144,7 @@ def generate_image_v2():
     final_tablecloth.save(data, "PNG")
     data.seek(0)
 
-    response = flask.send_file(data, as_attachment=True, download_name='tablecloth.png')
+    response = send_file(data, as_attachment=True, download_name='tablecloth.png')
 
     return _corsify_actual_response(response)
 
