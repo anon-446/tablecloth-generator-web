@@ -1,7 +1,6 @@
-import json, os, random
+import json, os, random, io
 from PIL import Image
 from flask import Flask, render_template, request, send_from_directory, make_response, send_file
-import io
 
 app = Flask(__name__)
 fp_open = open("config/teams.json", "r", encoding="utf-8")
@@ -141,7 +140,7 @@ def generate_image_v2():
     print(north_team)
 
     final_tablecloth = create_tablecloth_image(east_team, south_team, west_team, north_team)
-    data = BytesIO()
+    data = io.BytesIO()
     final_tablecloth.save(data, "PNG")
     data.seek(0)
 
