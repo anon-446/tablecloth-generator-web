@@ -1,6 +1,7 @@
 import json, os, random
 from PIL import Image
-from flask import Flask, render_template, request, send_from_directory, make_response
+from flask import Flask, render_template, request, send_from_directory, make_response, send_file
+import io
 
 app = Flask(__name__)
 fp_open = open("config/teams.json", "r",
@@ -92,19 +93,7 @@ def _corsify_actual_response(response):
     response.headers.add("Access-Control-Allow-Origin", "*")
     return response
 
-@app.route("/generate-image-v2/tablecloth.png", methods = ["GET"])
-def generate_image_v2():
-	if request.method == "OPTIONS": # CORS preflight
-		return _build_cors_preflight_response()
-	east_team = get_team_by_player_name(request.args.get("east"))
-	south_team = get_team_by_player_name(request.args.get("south"))
-	west_team = get_team_by_player_name(request.args.get("west"))
-	north_team = get_team_by_player_name(request.args.get("north"))
-	print(east_team)
-	print(south_team)
-	print(west_team)
-	print(north_team)
-
+def create_tablecloth_image(east_team, south_team, west_test, north_test):
 	tablecloth = Image.open(ROOT_DIR + "/static/mat.png")
 	border = Image.open(ROOT_DIR + "/static/table_border.png")
 	tech_lines = Image.open(ROOT_DIR + "/static/technical_lines.png")
@@ -136,11 +125,29 @@ def generate_image_v2():
 		final_tablecloth.paste(north_image.rotate(-90, expand=True).convert("RGBA"), (240, 240), north_image.rotate(-90, expand=True).convert("RGBA"))
 	else:
 		final_tablecloth.paste(north_image.resize((1568, 786)).rotate(-90, expand=True).convert("RGBA"), (240, 240), north_image.resize((1568, 786)).rotate(-90, expand=True).convert("RGBA"))
+	final_tablecloth.convert("RGB")
+	return final_tablecloth
 
-	tablecloth_name = "tablecloth_%d.jpg" % random.getrandbits(128)
-	final_tablecloth.convert("RGB").save(ROOT_DIR + "/static/temp_tablecloth/" + tablecloth_name)
+@app.route("/generate-image-v2/tablecloth.png", methods = ["GET"])
+def generate_image_v2():
+	if request.method == "OPTIONS": # CORS preflight
+		return _build_cors_preflight_response()
+	east_team = get_team_by_player_name(request.args.get("east"))
+	south_team = get_team_by_player_name(request.args.get("south"))
+	west_team = get_team_by_player_name(request.args.get("west"))
+	north_team = get_team_by_player_name(request.args.get("north"))
+	print(east_team)
+	print(south_team)
+	print(west_team)
+	print(north_team)
 
-	response = send_from_directory(ROOT_DIR + "/static/temp_tablecloth", tablecloth_name, mimetype='image/png')
+	final_tablecloth = create_tablecloth_image(east_team, south_team, west_team, north_team)
+	data = BytesIO()
+    final_tablecloth.save(data, "PNG")
+    data.seek(0)
+
+	response = flask.send_file(data, as_attachment=True, download_name='tablecloth.png')
+
 	return _corsify_actual_response(response)
 
 @app.route("/")
