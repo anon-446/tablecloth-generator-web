@@ -4,8 +4,7 @@ from flask import Flask, render_template, request, send_from_directory, make_res
 import io
 
 app = Flask(__name__)
-fp_open = open("config/teams.json", "r",
-                    encoding="utf-8")
+fp_open = open("config/teams.json", "r", encoding="utf-8")
 teams_config = json.loads(fp_open.read())
 img_dir = "/static"
 ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -53,21 +52,21 @@ def generate_image():
 		final_tablecloth.paste(tablecloth, (0, 0), tablecloth)
 		final_tablecloth.paste(border, (0,0), border)
 		if east_image.size == (1568, 786):
-		    final_tablecloth.paste(east_image, (240, 1020), east_image)
+			final_tablecloth.paste(east_image, (240, 1020), east_image)
 		else:
-		    final_tablecloth.paste(east_image.resize((1568, 786)), (240, 1020), east_image.resize((1568, 786)))
+			final_tablecloth.paste(east_image.resize((1568, 786)), (240, 1020), east_image.resize((1568, 786)))
 		if south_image.size == (1568, 786):
-		    final_tablecloth.paste(south_image.rotate(90, expand=True).convert("RGBA"), (1020, 240), south_image.rotate(90, expand=True).convert("RGBA"))
+			final_tablecloth.paste(south_image.rotate(90, expand=True).convert("RGBA"), (1020, 240), south_image.rotate(90, expand=True).convert("RGBA"))
 		else:
-		    final_tablecloth.paste(south_image.resize((1568, 786)).rotate(90, expand=True).convert("RGBA"), (1020, 240), south_image.resize((1568, 786)).rotate(90, expand=True).convert("RGBA"))
+			final_tablecloth.paste(south_image.resize((1568, 786)).rotate(90, expand=True).convert("RGBA"), (1020, 240), south_image.resize((1568, 786)).rotate(90, expand=True).convert("RGBA"))
 		if west_image.size == (1568, 786):
-		    final_tablecloth.paste(west_image, (235, 240), west_image)
+			final_tablecloth.paste(west_image, (235, 240), west_image)
 		else:
-		    final_tablecloth.paste(west_image.resize((1568, 786)), (235, 240), west_image.resize((1568, 786)))
+			final_tablecloth.paste(west_image.resize((1568, 786)), (235, 240), west_image.resize((1568, 786)))
 		if north_image.size == (1568, 786):
-		    final_tablecloth.paste(north_image.rotate(-90, expand=True).convert("RGBA"), (240, 240), north_image.rotate(-90, expand=True).convert("RGBA"))
+			final_tablecloth.paste(north_image.rotate(-90, expand=True).convert("RGBA"), (240, 240), north_image.rotate(-90, expand=True).convert("RGBA"))
 		else:
-		    final_tablecloth.paste(north_image.resize((1568, 786)).rotate(-90, expand=True).convert("RGBA"), (240, 240), north_image.resize((1568, 786)).rotate(-90, expand=True).convert("RGBA"))
+			final_tablecloth.paste(north_image.resize((1568, 786)).rotate(-90, expand=True).convert("RGBA"), (240, 240), north_image.resize((1568, 786)).rotate(-90, expand=True).convert("RGBA"))
 
 		tablecloth_name = "tablecloth_%d.jpg" % random.getrandbits(128)
 		final_tablecloth.convert("RGB").save(ROOT_DIR + "/static/temp_tablecloth/" + tablecloth_name)
@@ -83,15 +82,15 @@ def get_team_by_player_name(name):
 	return "default"
 
 def _build_cors_preflight_response():
-    response = make_response()
-    response.headers.add("Access-Control-Allow-Origin", "*")
-    response.headers.add('Access-Control-Allow-Headers', "*")
-    response.headers.add('Access-Control-Allow-Methods', "*")
-    return response
+	response = make_response()
+	response.headers.add("Access-Control-Allow-Origin", "*")
+	response.headers.add('Access-Control-Allow-Headers', "*")
+	response.headers.add('Access-Control-Allow-Methods', "*")
+	return response
 
 def _corsify_actual_response(response):
-    response.headers.add("Access-Control-Allow-Origin", "*")
-    return response
+	response.headers.add("Access-Control-Allow-Origin", "*")
+	return response
 
 def create_tablecloth_image(east_team, south_team, west_test, north_test):
 	tablecloth = Image.open(ROOT_DIR + "/static/mat.png")
@@ -143,8 +142,8 @@ def generate_image_v2():
 
 	final_tablecloth = create_tablecloth_image(east_team, south_team, west_team, north_team)
 	data = BytesIO()
-    final_tablecloth.save(data, "PNG")
-    data.seek(0)
+	final_tablecloth.save(data, "PNG")
+	data.seek(0)
 
 	response = flask.send_file(data, as_attachment=True, download_name='tablecloth.png')
 
@@ -155,4 +154,4 @@ def main():
 	return render_template("index.html", team_names=teams_config["teams"], teams=teams_config["players"].items())
 
 if __name__ == "__main__":
-    app.run(debug=True)
+	app.run(debug=True)
