@@ -91,7 +91,7 @@ def _corsify_actual_response(response):
     response.headers.add("Access-Control-Allow-Origin", "*")
     return response
 
-def create_tablecloth_image(east_team, south_team, west_test, north_test):
+def create_tablecloth_image(east_team, south_team, west_team, north_team):
     tablecloth = Image.open(ROOT_DIR + "/static/mat.png")
     border = Image.open(ROOT_DIR + "/static/table_border.png")
     tech_lines = Image.open(ROOT_DIR + "/static/technical_lines.png")
