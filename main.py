@@ -5,6 +5,8 @@ from flask import Flask, render_template, request, send_from_directory, make_res
 app = Flask(__name__)
 fp_open = open("config/teams.json", "r", encoding="utf-8")
 teams_config = json.loads(fp_open.read())
+id_config_file = open("config/id-teams.json", "r", encoding="utf-8")
+id_configs = json.loads(id_config_file.read())
 img_dir = "/static"
 ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -35,42 +37,12 @@ def generate_image():
         print(west_team)
         print(north_team)
 
-        tablecloth = Image.open(ROOT_DIR + "/static/mat.png")
-        border = Image.open(ROOT_DIR + "/static/table_border.png")
-        tech_lines = Image.open(ROOT_DIR + "/static/technical_lines.png")
-        east_image = Image.open(ROOT_DIR + "/static/tablecloth/team%d.png" % east_team)
-        east_image = east_image.convert("RGBA")
-        south_image = Image.open(ROOT_DIR + "/static/tablecloth/team%d.png" % south_team)
-        #south_image = south_image.rotate(90, expand=True).convert("RGBA")
-        west_image = Image.open(ROOT_DIR + "/static/tablecloth/team%d.png" % west_team)
-        west_image = west_image.rotate(180, expand=True).convert("RGBA")
-        north_image = Image.open(ROOT_DIR + "/static/tablecloth/team%d.png" % north_team)
-        #north_image = north_image.rotate(-90, expand=True).convert("RGBA")
+        final_tablecloth = create_tablecloth_image(east_team, south_team, west_team, north_team)
+        data = io.BytesIO()
+        final_tablecloth.save(data, "PNG")
+        data.seek(0)
 
-        final_tablecloth = Image.new("RGBA", (2048, 2048))
-        final_tablecloth.paste(tablecloth, (0, 0), tablecloth)
-        final_tablecloth.paste(border, (0,0), border)
-        if east_image.size == (1568, 786):
-            final_tablecloth.paste(east_image, (240, 1020), east_image)
-        else:
-            final_tablecloth.paste(east_image.resize((1568, 786)), (240, 1020), east_image.resize((1568, 786)))
-        if south_image.size == (1568, 786):
-            final_tablecloth.paste(south_image.rotate(90, expand=True).convert("RGBA"), (1020, 240), south_image.rotate(90, expand=True).convert("RGBA"))
-        else:
-            final_tablecloth.paste(south_image.resize((1568, 786)).rotate(90, expand=True).convert("RGBA"), (1020, 240), south_image.resize((1568, 786)).rotate(90, expand=True).convert("RGBA"))
-        if west_image.size == (1568, 786):
-            final_tablecloth.paste(west_image, (235, 240), west_image)
-        else:
-            final_tablecloth.paste(west_image.resize((1568, 786)), (235, 240), west_image.resize((1568, 786)))
-        if north_image.size == (1568, 786):
-            final_tablecloth.paste(north_image.rotate(-90, expand=True).convert("RGBA"), (240, 240), north_image.rotate(-90, expand=True).convert("RGBA"))
-        else:
-            final_tablecloth.paste(north_image.resize((1568, 786)).rotate(-90, expand=True).convert("RGBA"), (240, 240), north_image.resize((1568, 786)).rotate(-90, expand=True).convert("RGBA"))
-
-        tablecloth_name = "tablecloth_%d.jpg" % random.getrandbits(128)
-        final_tablecloth.convert("RGB").save(ROOT_DIR + "/static/temp_tablecloth/" + tablecloth_name)
-
-        return send_from_directory(ROOT_DIR + "/static/temp_tablecloth", tablecloth_name, mimetype='image/png')
+        return send_file(data, as_attachment=False, download_name='tablecloth.png')
 
 def get_team_by_player_name(name):
     player_teams = teams_config["players"]
@@ -144,7 +116,34 @@ def generate_image_v2():
     final_tablecloth.save(data, "PNG")
     data.seek(0)
 
-    response = send_file(data, as_attachment=True, download_name='tablecloth.png')
+    response = send_file(data, as_attachment=False, download_name='tablecloth.png')
+
+    return _corsify_actual_response(response)
+
+def get_team_by_id(player_id):
+    if player_id in id_configs:
+        return id_configs[player_id]
+    return "default"
+
+@app.route("/generate-image-v3/tablecloth.png", methods = ["GET"])
+def generate_image_v3():
+    if request.method == "OPTIONS": # CORS preflight
+        return _build_cors_preflight_response()
+    east_team = get_team_by_id(request.args.get("east"))
+    south_team = get_team_by_id(request.args.get("south"))
+    west_team = get_team_by_id(request.args.get("west"))
+    north_team = get_team_by_id(request.args.get("north"))
+    print(east_team)
+    print(south_team)
+    print(west_team)
+    print(north_team)
+
+    final_tablecloth = create_tablecloth_image(east_team, south_team, west_team, north_team)
+    data = io.BytesIO()
+    final_tablecloth.save(data, "PNG")
+    data.seek(0)
+
+    response = send_file(data, as_attachment=False, download_name='tablecloth.png')
 
     return _corsify_actual_response(response)
 
