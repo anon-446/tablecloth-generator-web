@@ -74,13 +74,13 @@ def _corsify_actual_response(response):
     return response
 
 def create_tablecloth_image(east_team, south_team, west_team, north_team):
-    east_image = tablecloth_dict(east_team)
+    east_image = tablecloth_dict[east_team]
     east_image = east_image.convert("RGBA")
-    south_image = tablecloth_dict(south_team)
+    south_image = tablecloth_dict[south_team]
     #south_image = south_image.rotate(90, expand=True).convert("RGBA")
-    west_image = tablecloth_dict(west_team)
+    west_image = tablecloth_dict[west_team]
     west_image = west_image.rotate(180, expand=True).convert("RGBA")
-    north_image = tablecloth_dict(north_team)
+    north_image = tablecloth_dict[north_team]
     #north_image = north_image.rotate(-90, expand=True).convert("RGBA")
 
     final_tablecloth = Image.new("RGBA", (2048, 2048))
