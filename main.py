@@ -95,8 +95,8 @@ def create_tablecloth_image(east_team, south_team, west_team, north_team):
         final_tablecloth.paste(north_image.rotate(-90, expand=True).convert("RGBA"), (240, 240), north_image.rotate(-90, expand=True).convert("RGBA"))
     else:
         final_tablecloth.paste(north_image.resize((1568, 786)).rotate(-90, expand=True).convert("RGBA"), (240, 240), north_image.resize((1568, 786)).rotate(-90, expand=True).convert("RGBA"))
-    final_tablecloth.convert("RGB")
-    return final_tablecloth
+
+    return final_tablecloth.convert("RGB")
 
 @app.route("/generate-image-v2/tablecloth.png", methods = ["GET"])
 def generate_image_v2():
