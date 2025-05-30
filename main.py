@@ -9,6 +9,16 @@ id_config_file = open("config/id-teams.json", "r", encoding="utf-8")
 id_configs = json.loads(id_config_file.read())
 img_dir = "/static"
 ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
+NUM_TEAMS = 18
+
+tablecloth = Image.open(ROOT_DIR + "/static/mat.png")
+border = Image.open(ROOT_DIR + "/static/table_border.png")
+tech_lines = Image.open(ROOT_DIR + "/static/technical_lines.png")
+tablecloth_dict = {}
+for i in range(0, NUM_TEAMS):
+    team_num_str = str(i + 1)
+    tablecloth_dict[team_num_str] = Image.open(ROOT_DIR + "/static/tablecloth/team%s.png" % team_num_str)
+tablecloth_dict["default"] = Image.open(ROOT_DIR + "/static/tablecloth/team%s.png" % "default")
 
 @app.route("/team-image/", methods=["GET"])
 def find_team_image():
@@ -25,13 +35,13 @@ def generate_image():
 
     if request.method == "POST":
         east_team = request.form["east"]
-        east_team = teams_config["teams"].index(east_team) + 1
+        east_team = str(teams_config["teams"].index(east_team) + 1)
         south_team = request.form["south"]
-        south_team = teams_config["teams"].index(south_team) + 1
+        south_team = str(teams_config["teams"].index(south_team) + 1)
         west_team = request.form["west"]
-        west_team = teams_config["teams"].index(west_team) + 1
+        west_team = str(teams_config["teams"].index(west_team) + 1)
         north_team = request.form["north"]
-        north_team = teams_config["teams"].index(north_team) + 1
+        north_team = str(teams_config["teams"].index(north_team) + 1)
         print(east_team)
         print(south_team)
         print(west_team)
@@ -49,7 +59,7 @@ def get_team_by_player_name(name):
     for team in player_teams:
         lowercase_names = [item.lower() for item in player_teams[team]]
         if name.lower() in lowercase_names:
-            return teams_config["teams"].index(team) + 1
+            return str(teams_config["teams"].index(team) + 1)
     return "default"
 
 def _build_cors_preflight_response():
@@ -64,16 +74,13 @@ def _corsify_actual_response(response):
     return response
 
 def create_tablecloth_image(east_team, south_team, west_team, north_team):
-    tablecloth = Image.open(ROOT_DIR + "/static/mat.png")
-    border = Image.open(ROOT_DIR + "/static/table_border.png")
-    tech_lines = Image.open(ROOT_DIR + "/static/technical_lines.png")
-    east_image = Image.open(ROOT_DIR + "/static/tablecloth/team%s.png" % east_team)
+    east_image = tablecloth_dict(east_team)
     east_image = east_image.convert("RGBA")
-    south_image = Image.open(ROOT_DIR + "/static/tablecloth/team%s.png" % south_team)
+    south_image = tablecloth_dict(south_team)
     #south_image = south_image.rotate(90, expand=True).convert("RGBA")
-    west_image = Image.open(ROOT_DIR + "/static/tablecloth/team%s.png" % west_team)
+    west_image = tablecloth_dict(west_team)
     west_image = west_image.rotate(180, expand=True).convert("RGBA")
-    north_image = Image.open(ROOT_DIR + "/static/tablecloth/team%s.png" % north_team)
+    north_image = tablecloth_dict(north_team)
     #north_image = north_image.rotate(-90, expand=True).convert("RGBA")
 
     final_tablecloth = Image.new("RGBA", (2048, 2048))
