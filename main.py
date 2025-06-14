@@ -1,6 +1,6 @@
-import json, os, random, io
+import json, os, io
 from PIL import Image
-from flask import Flask, render_template, request, send_from_directory, make_response, send_file
+from flask import Flask, render_template, request, make_response, send_file
 
 app = Flask(__name__)
 fp_open = open("config/teams.json", "r", encoding="utf-8")
