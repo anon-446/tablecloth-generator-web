@@ -32,7 +32,6 @@ def find_team_image():
 
 @app.route("/generate-image/", methods=["POST"])
 def generate_image():
-
     if request.method == "POST":
         east_team = request.form["east"]
         east_team = str(teams_config["teams"].index(east_team) + 1)
@@ -49,10 +48,10 @@ def generate_image():
 
         final_tablecloth = create_tablecloth_image(east_team, south_team, west_team, north_team)
         data = io.BytesIO()
-        final_tablecloth.save(data, "PNG")
+        final_tablecloth.save(data, "JPEG")
         data.seek(0)
 
-        return send_file(data, as_attachment=False, download_name='tablecloth.png')
+        return send_file(data, as_attachment=True, download_name='Table_Dif.jpg')
 
 def get_team_by_player_name(name):
     player_teams = teams_config["players"]
