@@ -122,7 +122,7 @@ def generate_image_v2():
     final_tablecloth.save(data, "JPEG")
     data.seek(0)
 
-    response = send_file(data, as_attachment=False, download_name='tablecloth.png')
+    response = send_file(data, as_attachment=False, download_name='Table_Dif.jpg')
 
     return _corsify_actual_response(response)
 
@@ -149,7 +149,7 @@ def generate_image_v3():
     final_tablecloth.save(data, "JPEG")
     data.seek(0)
 
-    response = send_file(data, as_attachment=False, download_name='tablecloth.png')
+    response = send_file(data, as_attachment=False, download_name='Table_Dif.jpg')
 
     return _corsify_actual_response(response)
 
