@@ -9,7 +9,7 @@ id_config_file = open("config/id-teams.json", "r", encoding="utf-8")
 id_configs = json.loads(id_config_file.read())
 img_dir = "/static"
 ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
-NUM_TEAMS = 18
+NUM_TEAMS = 16
 
 tablecloth = Image.open(ROOT_DIR + "/static/mat.png")
 border = Image.open(ROOT_DIR + "/static/table_border.png")
