@@ -11,8 +11,9 @@ def process_team_config(team_to_players):
         'teams': [],
         'players': {}
     }
+    sorted_teams = sorted(team_to_players.keys(), key=int)
 
-    for team in team_to_players:
+    for team in sorted_teams:
         team_name = 'Team' + team
         team_config['teams'].append(team_name)
         team_config['players'][team_name] = team_to_players[team]

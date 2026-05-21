@@ -1,21 +1,21 @@
 {
   "teams": [
     "Team1",
-    "Team7",
-    "Team13",
     "Team2",
-    "Team8",
-    "Team14",
     "Team3",
-    "Team9",
-    "Team15",
     "Team4",
-    "Team10",
-    "Team16",
     "Team5",
-    "Team11",
     "Team6",
-    "Team12"
+    "Team7",
+    "Team8",
+    "Team9",
+    "Team10",
+    "Team11",
+    "Team12",
+    "Team13",
+    "Team14",
+    "Team15",
+    "Team16"
   ],
   "players": {
     "Team1": [
@@ -30,28 +30,6 @@
       "XDA1",
       "nyaggg"
     ],
-    "Team7": [
-      "\u3042\u308b\u3066\u305d\u3089",
-      "\u540d\u7121\u3057",
-      "Maria33",
-      "michaelao",
-      "orangepeel",
-      "Nill2",
-      "\u5e78\u798f\u7684\u5e7b\u89ba",
-      "~~",
-      "\u61a7\u65b0\u5b50",
-      "Kirk"
-    ],
-    "Team13": [
-      "Onpu",
-      "CureMilky",
-      "DualEgo",
-      "PagatUltimo",
-      "muyokoe",
-      "kirkei",
-      "GRAP3",
-      "CautiousMink"
-    ],
     "Team2": [
       "CyberAngel",
       "ballblasta",
@@ -63,29 +41,6 @@
       "lolicia",
       "icantjong",
       "\u307a\u3044"
-    ],
-    "Team8": [
-      "Conor12",
-      "BURAKINAITO",
-      "Rimu",
-      "dkm",
-      "Seleton",
-      "Bratella",
-      "Rovert10",
-      "116i",
-      "BelovedTenko",
-      "Monoviz"
-    ],
-    "Team14": [
-      "Florg",
-      "Atoru",
-      "XSA",
-      "\u30ef\u30cf\u30cf",
-      "Sakuhara",
-      "BULKVANDERHUGE",
-      "Obskiur",
-      "rezaloan",
-      "JFortKennedy"
     ],
     "Team3": [
       "tumultuous",
@@ -99,29 +54,6 @@
       "TheBedWetter",
       "QuadHound"
     ],
-    "Team9": [
-      "artbuddy",
-      "Wheed",
-      "Resko",
-      "Idrinkwater",
-      "Bodoque",
-      "SuliDerDuli",
-      "bnkrg\u59c9\u8cb4",
-      "Reggro",
-      "TheCount",
-      "fgsdf"
-    ],
-    "Team15": [
-      "Rekko",
-      "HarryLegs",
-      "Betty",
-      "Shouryu",
-      "ReimusAinus",
-      "eboy_",
-      "Meido",
-      "RingoB",
-      "tibiii"
-    ],
     "Team4": [
       "rigged",
       "Waifu",
@@ -133,28 +65,6 @@
       "Juphie",
       "osol",
       "ELCH1PONKANBRA"
-    ],
-    "Team10": [
-      "Kingdomfreak",
-      "Faageg",
-      "CEOofAutism",
-      "Fenou",
-      "bakasenpai",
-      "MSpark",
-      "Floats",
-      "BathhouseOwner",
-      "LecheFlan"
-    ],
-    "Team16": [
-      "SakiMadeMePlay",
-      "ilikejelly",
-      "Minoriko",
-      "AMBATUKAN",
-      "Kress",
-      "nyagger",
-      "aya\u6587",
-      "Phalls",
-      "Binzyn"
     ],
     "Team5": [
       "teach",
@@ -168,6 +78,63 @@
       "\u7720\u3044\u30ed\u30f3",
       "Arnavion"
     ],
+    "Team6": [
+      "KawawaAsuna",
+      "turbulent",
+      "AkaNashi",
+      "socculta",
+      "OdinEdge",
+      "Skor",
+      "argalia",
+      "arandomfatkid"
+    ],
+    "Team7": [
+      "\u3042\u308b\u3066\u305d\u3089",
+      "\u540d\u7121\u3057",
+      "Maria33",
+      "michaelao",
+      "orangepeel",
+      "Nill2",
+      "\u5e78\u798f\u7684\u5e7b\u89ba",
+      "~~",
+      "\u61a7\u65b0\u5b50",
+      "Kirk"
+    ],
+    "Team8": [
+      "Conor12",
+      "BURAKINAITO",
+      "Rimu",
+      "dkm",
+      "Seleton",
+      "Bratella",
+      "Rovert10",
+      "116i",
+      "BelovedTenko",
+      "Monoviz"
+    ],
+    "Team9": [
+      "artbuddy",
+      "Wheed",
+      "Resko",
+      "Idrinkwater",
+      "Bodoque",
+      "SuliDerDuli",
+      "bnkrg\u59c9\u8cb4",
+      "Reggro",
+      "TheCount",
+      "fgsdf"
+    ],
+    "Team10": [
+      "Kingdomfreak",
+      "Faageg",
+      "CEOofAutism",
+      "Fenou",
+      "bakasenpai",
+      "MSpark",
+      "Floats",
+      "BathhouseOwner",
+      "LecheFlan"
+    ],
     "Team11": [
       "MechLamb",
       "WhiteZORA",
@@ -179,16 +146,6 @@
       "BAGFACE",
       "Quaoid"
     ],
-    "Team6": [
-      "KawawaAsuna",
-      "turbulent",
-      "AkaNashi",
-      "socculta",
-      "OdinEdge",
-      "Skor",
-      "argalia",
-      "arandomfatkid"
-    ],
     "Team12": [
       "}{!jvmG;mWY3l&",
       "szme",
@@ -199,6 +156,49 @@
       "nyaagers",
       "Vagaris",
       "\u30a6\u30a4\u30b9\u30ad\u30fc\u30b5\u30ef"
+    ],
+    "Team13": [
+      "Onpu",
+      "CureMilky",
+      "DualEgo",
+      "PagatUltimo",
+      "muyokoe",
+      "kirkei",
+      "GRAP3",
+      "CautiousMink"
+    ],
+    "Team14": [
+      "Florg",
+      "Atoru",
+      "XSA",
+      "\u30ef\u30cf\u30cf",
+      "Sakuhara",
+      "BULKVANDERHUGE",
+      "Obskiur",
+      "rezaloan",
+      "JFortKennedy"
+    ],
+    "Team15": [
+      "Rekko",
+      "HarryLegs",
+      "Betty",
+      "Shouryu",
+      "ReimusAinus",
+      "eboy_",
+      "Meido",
+      "RingoB",
+      "tibiii"
+    ],
+    "Team16": [
+      "SakiMadeMePlay",
+      "ilikejelly",
+      "Minoriko",
+      "AMBATUKAN",
+      "Kress",
+      "nyagger",
+      "aya\u6587",
+      "Phalls",
+      "Binzyn"
     ]
   }
 }
