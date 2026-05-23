@@ -17,12 +17,11 @@ tech_lines = Image.open(ROOT_DIR + "/static/technical_lines.png")
 tablecloth_dict = {}
 for i in range(0, NUM_TEAMS):
     team_num_str = str(i + 1)
-    tablecloth_dict[team_num_str] = Image.open(ROOT_DIR + "/static/tablecloth/team%s.png" % team_num_str)
-tablecloth_dict["default"] = Image.open(ROOT_DIR + "/static/tablecloth/team%s.png" % "default")
+    tablecloth_dict[team_num_str] = Image.open(ROOT_DIR + "/static/tablecloth/%s.png" % team_num_str)
+tablecloth_dict["default"] = Image.open(ROOT_DIR + "/static/tablecloth/%s.png" % "default")
 
 @app.route("/team-image/", methods=["GET"])
 def find_team_image():
-
     if request.method == "GET":
         team_name = request.args["team_name"]
         team_id = teams_config["teams"].index(team_name) + 1
